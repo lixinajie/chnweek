@@ -1,17 +1,27 @@
 package controllers
 import(
 	"github.com/astaxie/beego"
+	"chnweek/models"
+	"strings"
 	_"fmt"
 )
 
 type BaseController struct {
 	beego.Controller
+	adminInfo *models.Admin
+	controllerName string
+	actionName string
 }
 
 func (this *BaseController) Prepare() {
+	controllerName, actionName := this.GetControllerAndAction()
+	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
+	this.actionName = strings.ToLower(actionName)
 	//判断是否已经登录
+	this.checkLogin()
 }
 
+//json返回
 func (this *BaseController) jsonResult (code int,msg string,data ...interface{}) {
 	reponse := make(map[string]interface{})
 	reponse["code"] = code
@@ -31,12 +41,16 @@ func (this *BaseController) checkLogin() {
 }
 
 
-
-
-
-
-
-
-
+//设置模板
+func (this *BaseController) setTpl(tpl ...string) {
+	var tplName string
+	if len(tpl) > 0 {
+		tplName = strings.Join([]string{tpl[0], "html"}, ".")
+	}	else {
+		tplName = this.controllerName + "/" + this.actionName + ".html"
+	}
+	this.Layout = "public/layout.html"
+	this.TplName = tplName	
+}
 
 
