@@ -5,6 +5,7 @@ import(
 	"chnweek/utils"
 	_"fmt"
 	"strings"
+	"time"
 )
 
 type SiteController struct {
@@ -44,7 +45,11 @@ func (this *SiteController) DoLogin() {
 		this.jsonResult(1000,"账号、密码有误")
 	}
 	this.SetSession("adminInfo",adminInfo)
-	this.jsonResult(200,"登录成功")
-	
+	//登录成功后修改用户登录ip等信息
+	adminInfo.LastTime = time.Now().Unix() 
+	ip := this.Ctx.Input.IP()	
+	adminInfo.LastTime,_ = utils.Ip2Long(ip)
+	models.UpdateAdmin(adminInfo)
+	this.jsonResult(200,"登录成功")	
 }
 

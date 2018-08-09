@@ -1,7 +1,7 @@
 package controllers
 import(
 	"github.com/astaxie/beego"
-	"fmt"
+	_"fmt"
 )
 
 type BaseController struct {
@@ -9,8 +9,7 @@ type BaseController struct {
 }
 
 func (this *BaseController) Prepare() {
-	fmt.Println("hello Base")
-
+	//判断是否已经登录
 }
 
 func (this *BaseController) jsonResult (code int,msg string,data ...interface{}) {
@@ -23,7 +22,13 @@ func (this *BaseController) jsonResult (code int,msg string,data ...interface{})
 	this.StopRun()
 }
 
-
+//判断是否已经登录
+func (this *BaseController) checkLogin() {
+	adminInfo := this.GetSession("adminInfo")
+	if adminInfo == nil{
+		this.Ctx.Redirect(302,"/login")
+	}
+}
 
 
 

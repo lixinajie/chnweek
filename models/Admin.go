@@ -13,7 +13,7 @@ type Admin struct {
 	LastTime int64
 	LastIp 	 int64
 	Status   int8
-	CretaTime  int64
+	CreataTime  int64
 	UpdateTime int64
 }
 
@@ -34,3 +34,12 @@ func AdminGetOneByUserName(userName string) (*Admin,error) {
 	return a,nil
 }
 
+func UpdateAdmin(admin *Admin) error {
+	o := orm.NewOrm()
+	err := o.Read(admin)
+	if err != nil {
+		return err
+	}
+	_,err = o.Update(admin)
+	return err
+}

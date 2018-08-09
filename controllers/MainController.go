@@ -9,7 +9,7 @@ type MainController struct {
 }
 
 func(this *MainController) Prepare() {
-
+	this.BaseController.Prepare()
 }
 
 func (c *MainController) Get() {
