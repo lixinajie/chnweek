@@ -5,7 +5,7 @@ import (
 )
 
 func init() {
-	orm.RegisterModel(new(Admin))
+	orm.RegisterModel(new(Admin),new(Menu))
 }
 
 func TableName(name string) string {

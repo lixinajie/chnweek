@@ -3,7 +3,7 @@ import(
 	"github.com/astaxie/beego"
 	"chnweek/models"
 	"strings"
-	_"fmt"
+	"fmt"
 )
 
 type BaseController struct {
@@ -18,7 +18,8 @@ func (this *BaseController) Prepare() {
 	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
 	this.actionName = strings.ToLower(actionName)
 	//判断是否已经登录
-	this.checkLogin()
+	//this.checkLogin()
+	this.getMenu()
 }
 
 //json返回
@@ -51,6 +52,14 @@ func (this *BaseController) setTpl(tpl ...string) {
 	}
 	this.Layout = "public/layout.html"
 	this.TplName = tplName	
+}
+
+//获取菜单
+func (this *BaseController) getMenu() {
+	menuList,err := models.MenuGetAll()
+	if err == nil && len(menuList)>0 {
+		fmt.Println(menuList)		
+	}
 }
 
 
