@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	_"github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 )
 
 type MainController struct {
@@ -12,8 +12,13 @@ func(this *MainController) Prepare() {
 	this.BaseController.Prepare()
 }
 
-func (c *MainController) Get() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
-	c.setTpl("main/index")
+func (this *MainController) Get() {
+	this.Data["siteName"] = beego.AppConfig.String("web_name")+"管理系统"
+	this.TplName = "public/main.html"
+}
+
+//系统首页
+func (this *MainController)	Index() {
+	this.Data["pageTitle"] = "首页"
+	this.setTpl("main/index")
 }

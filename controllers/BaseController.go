@@ -35,7 +35,8 @@ func (this *BaseController) jsonResult (code int,msg string,data ...interface{})
 
 //判断是否已经登录
 func (this *BaseController) checkLogin() {
-	adminInfo := this.GetSession("adminInfo")
+	//adminInfo := this.GetSession("adminInfo")
+	adminInfo := []int{1,2}
 	if adminInfo == nil{
 		this.Ctx.Redirect(302,"/login")
 	}
@@ -49,6 +50,9 @@ func (this *BaseController) setTpl(tpl ...string) {
 		tplName = strings.Join([]string{tpl[0], "html"}, ".")
 	}	else {
 		tplName = this.controllerName + "/" + this.actionName + ".html"
+	}
+	if this.Data["siteName"] == nil {
+		this.Data["siteName"] =	beego.AppConfig.String("web_name") 
 	}
 	this.Layout = "public/layout.html"
 	this.TplName = tplName	
