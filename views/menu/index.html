@@ -1,0 +1,89 @@
+<div class="mt10" style="width: 100%;height: 30px">
+    <button class="btn btn-info fr" href="javascript:;" onclick="add(this)">
+        <i class="fa fa-plus"></i> 添加
+    </button>
+</div>
+<div  style="width: 100%;">
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>标题</th>
+            <th>控制器</th>
+            <th>方法</th>
+            <th>权重</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ if .menuList}}
+        {{range $k,$v := .menuList}}
+        <tr>
+            <td>{{$v.Id}}</td>
+            <td>{{$v.Name}}</td>
+            <td>{{$v.Controller}}</td>
+            <td>{{$v.Method}}</td>
+            <td>{{$v.Sort}}</td>
+            <td>
+                {{if eq $v.Status 1}}
+                正常
+                {{else if eq $v.Status -1}}
+                删除
+                {{else}}
+                禁用
+                {{end}}
+            </td>
+            <td>
+                <button class="btn btn-primary btn-xs" onclick=""><i class="fa fa-pencil"></i> 编辑</button>
+                <button class="btn btn-danger btn-xs" onclick=""><i class="fa fa-trash"></i> 删除</button>
+            </td>
+        </tr>
+        {{if $v.Children}}
+        {{range $key,$val := $v.Children}}
+        <tr>
+            <td>{{$val.Id}}</td>
+            <td>&nbsp;&nbsp;|-{{$val.Name}}</td>
+            <td>{{$val.Controller}}</td>
+            <td>{{$val.Method}}</td>
+            <td>{{$val.Sort}}</td>
+            <td>
+                {{if eq $val.Status 1}}
+                正常
+                {{else if eq $val.Status -1}}
+                删除
+                {{else}}
+                禁用
+                {{end}}
+            </td>
+            <td>
+                <button class="btn btn-primary btn-xs" onclick=""><i class="fa fa-pencil"></i> 编辑</button>
+                <button class="btn btn-danger btn-xs" onclick=""><i class="fa fa-trash"></i> 删除</button>
+            </td>
+        </tr>
+        {{end}}
+        {{end}}
+        {{end}}
+        {{end}}
+        </tbody>
+    </table>
+</div>
+<script>
+    function add (obj) {
+        layer.open({
+            type: 2,
+            title: '添加菜单',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['70%', '80%'],
+            content: '/menu/add' //iframe的url
+        });
+    }
+</script>
+
+

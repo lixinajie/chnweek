@@ -2,6 +2,7 @@ package controllers
 import(
 	"github.com/astaxie/beego"
 	"chnweek/models"
+	"chnweek/services"
 	"strings"
 	"fmt"
 )
@@ -18,7 +19,7 @@ func (this *BaseController) Prepare() {
 	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
 	this.actionName = strings.ToLower(actionName)
 	//判断是否已经登录
-	//this.checkLogin()
+	this.checkLogin()
 	this.getMenu()
 }
 
@@ -61,9 +62,11 @@ func (this *BaseController) setTpl(tpl ...string) {
 //获取菜单
 func (this *BaseController) getMenu() {
 	menuList,err := models.MenuGetAll()
+	fmt.Println(menuList)
 	if err == nil && len(menuList)>0 {
-		fmt.Println(menuList)		
+		menuList=services.MenuRecursion(menuList,0)		
 	}
+	this.Data["menuList"] = menuList
 }
 
 

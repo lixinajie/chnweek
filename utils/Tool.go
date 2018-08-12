@@ -5,7 +5,7 @@ import (
 	"errors"
 	"math/big"
 	"net"
-	_"reflect"
+	"reflect"
 	_"fmt"
 )
 
@@ -36,6 +36,25 @@ func Long2IP (intIp int64) (string,error){
     bytes[3] = byte((intIp >> 24) & 0xFF)
 	ip := net.IPv4(bytes[3],bytes[2],bytes[1],bytes[0])
 	return ip.String(),nil
+}
+
+func StructToMap (obj interface{}) map[string]interface{} {
+	t := reflect.TypeOf(obj)
+	v := reflect.ValueOf(obj)
+	if t.Kind() == reflect.Ptr {	
+		t = t.Elem()	
+		v = v.Elem()
+	}
+	if t.Kind() != reflect.Struct{
+		return nil	
+	}	
+	fieldNum := t.NumField()
+	data := make(map[string]interface{})
+	for i:=0;i<fieldNum;i++ {
+		fieldName := t.Field(i).Name
+		data[fieldName] = v.Field(i).Interface()
+	}
+	return data
 }
 
 

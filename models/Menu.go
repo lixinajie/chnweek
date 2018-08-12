@@ -35,3 +35,21 @@ func MenuGetAll() ([]*Menu,error) {
 	}
 	return a,err
 }
+
+func MenuGetOneById (id int64) (*Menu,error) {
+	a := &Menu{}
+	err := orm.NewOrm().QueryTable(MenuTableName()).One(a)
+	if err != nil {
+		return nil,err
+	}
+	return a,nil
+}
+
+func MenuGetAllByPid(pid int64) ([]*Menu,error) {
+	a := make([]*Menu,0)
+	_,err := orm.NewOrm().QueryTable(MenuTableName()).Filter("pid",pid).All(&a)
+	if err != nil {
+		return nil,err
+	}
+	return a,err
+}

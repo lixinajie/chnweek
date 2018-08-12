@@ -36,12 +36,20 @@
 	margin-left: 20px; 
 }
 
+.ml10{
+	margin-left: 10px;
+}
+
 .ml8{
 	margin-left: 8px;
 }
 
 .mt10{
 	margin-top:10px;
+}
+
+.mr10{
+	margin-right: 10px;
 }
 
 .search_text{

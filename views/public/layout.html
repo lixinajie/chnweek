@@ -14,20 +14,28 @@
     <link rel="stylesheet" href="/static/css/api.css?s=426">
     {{end}}
     <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.css" media="all">
+    <script src="/static/js/jquery-2.2.2.js"></script>
+    <script src="/static/layer/layer.js"></script>
     <script src="/static/layui/layui.js?s=36"></script>
-
+    <script src="/static/plugins/bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
-<div class="nav-title">
-    <div class="tl fl">
-        {{.pageTitle}}
-    </div>
-    <div class="tr fr">
-        <button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs" onclick="javascript:history.go(-1);"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-        <button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs" onclick="javascript:window.location.reload();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-    </div>
+    {{if .isPopup}}
+    {{else}}
+        <div class="nav-title">
+            <div class="tl fl">
+                {{.pageTitle}}
+            </div>
+            <div class="tr fr">
+                <button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs" onclick="javascript:history.go(-1);"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                <button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs" onclick="javascript:window.location.reload();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    {{end}}
+<div class="ml10 mr10">
+    <!-- 内容主体区域 -->
+    {{.LayoutContent}}
 </div>
-<!-- 内容主体区域 -->
-{{.LayoutContent}}
 </body>
 </html>
